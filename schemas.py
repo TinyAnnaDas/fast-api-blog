@@ -19,17 +19,29 @@ class UserResponse(UserBase):
     image_file: str | None
     image_path: str
 
+class UserUpdate(BaseModel):
+    username: str | None = Field(default=None, min_length=1, max_length=50)
+    email: EmailStr | None = Field(default=None, max_length=120)
+    image_file: str | None = Field(default=None, min_length=1, max_length=200)
+
+
+
 
 
 #it looks like data classes, but pydantic uses these type hints to validate data at runtime.
 class PostBase(BaseModel):
-    title: str = Field(min_length=1, max_length=100)
-    content: str = Field(min_length=1)
+    title: str = Field(default=None, min_length=1, max_length=100)
+    content: str = Field(default=None, min_length=1)
 # without default values, it means that these fields are mandatory.
 
 
 class PostCreate(PostBase):
     user_id: int # Temperary
+
+class PostUpdate(PostBase):
+    title: str | None = Field(default=None, min_length=1, max_length=100)
+    content: str | None = Field(default=None, min_length=1)
+
 
 
 #
